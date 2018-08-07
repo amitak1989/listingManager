@@ -1,89 +1,75 @@
 package com.listingmanager;
 
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.store.FileDataStoreFactory;
-import com.google.api.services.mybusiness.v4.MyBusiness;
-import com.google.api.services.mybusiness.v4.model.ListAccountsResponse;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Collections;
+import com.google.api.services.mybusiness.v4.model.*;
+import com.listingmanager.services.AccountService;
+import com.listingmanager.services.LocationService;
+import com.listingmanager.services.PostService;
+
+import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
-    private static final String APPLICATION_NAME =
-            "Google My Business API Java Quickstart";
-    private static final java.io.File DATA_STORE_DIR =
-            new java.io.File(System.getProperty("user.home"),
-                    ".store/mybusiness_sample");
-    private static FileDataStoreFactory dataStoreFactory;
-    private static HttpTransport httpTransport;
-    private static final JsonFactory JSON_FACTORY =
-            JacksonFactory.getDefaultInstance();
-    private static MyBusiness mybusiness;
-
-    /**
-     * Demonstrates the authentication flow to use
-     * with the Google My Business API Java client library.
-     * @return AuthorizationCodeInstalledApp
-     */
-    private static Credential authorize() throws Exception {
-        // Creates an InputStream to hold the client ID and secret.
-        InputStream secrets = Main.class.getResourceAsStream("client_secrets.json");
-
-        // Prompts the user if no credential is found.
-        if (secrets == null) {
-            System.out.println(
-                    "Enter Client ID and Secret from Google API Console "
-                            + "into google-my-business-api-sample/src/main/resources/client_secrets.json");
-            System.exit(1);
-        }
-
-        // Uses the InputStream to create an instance of GoogleClientSecrets.
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
-                new InputStreamReader(secrets));
-        if (clientSecrets.getDetails().getClientId().startsWith("Enter")
-                || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
-            System.out.println(
-                    "Enter Client ID and Secret from Google API Console "
-                            + "into google-my-business-api-sample/src/main/resources/client_secrets.json");
-            System.exit(1);
-        }
-
-        // Sets up the authorization code flow.
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                httpTransport, JSON_FACTORY, clientSecrets,
-                Collections.singleton("https://www.googleapis.com/auth/plus.business.manage"))
-                .setDataStoreFactory(dataStoreFactory).build();
-        LocalServerReceiver localReceiver = new LocalServerReceiver.
-                Builder().setPort(51551).build();
-        // Returns the credential.
-        return new AuthorizationCodeInstalledApp(flow, localReceiver).authorize("user");
-    }
 
     public static void main(String[] args)throws Exception {
-        httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-        dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
+        //AccountService.getAccountList();
+        //accounts/117692749187411798258 account name
+        //System.out.println(LocationService.listLocations("accounts/117692749187411798258"));
+        //accounts/117692749187411798258/locations/14413052432422241275 location name
 
-        // Calls the authorize() function to get a credential.
-        Credential credential = authorize();
+        LocalPost post=new LocalPost();
+        post.setLanguageCode("en");
+        post.setSummary("Test Post 1");
+        post.setTopicType("STANDARD");
+        post.setState("LIVE");
 
-        // Calls MyBusiness.Builder to create a new instance named 'mybusiness'.
-        mybusiness = new MyBusiness.Builder(httpTransport, JSON_FACTORY, credential)
-                .setApplicationName(APPLICATION_NAME).build();
 
-        // Uses the 'mybusiness' instance to send an API call.
-        MyBusiness.Accounts.List accountsList = mybusiness.accounts().list();
-        ListAccountsResponse response = accountsList.execute();
-        List accounts = response.getAccounts();
+        MediaItem mi = new MediaItem();
+        mi.setSourceUrl("https://upload.wikimedia.org/wikipedia/commons/4/49/Modern_Script_A.svg");
+        mi.setMediaFormat("PHOTO");
+
+        List<MediaItem>  mis = new ArrayList<MediaItem>();
+        mis.add(mi);
+        //post.setMedia(mis);
+
+
+        LocalPostOffer offer = new LocalPostOffer();
+        offer.setCouponCode("CE345KF");
+        //offer.setRedeemOnlineUrl("http://google.com");
+        //offer.setTermsConditions("test offer");
+        //post.setOffer(offer);
+       //PostService.createPost("accounts/117692749187411798258/locations/14413052432422241275",post);
+
+        //System.out.println(PostService.getPosts("accounts/117692749187411798258/locations/14413052432422241275"));
+        //"accounts/-/locations/14413052432422241275/localPosts/615027060748428194"
+
+        //PostService.deletePost("accounts/117692749187411798258/locations/14413052432422241275/localPosts/3980021726168296878");
+        //PostService.createPost("accounts/117692749187411798258/locations/14413052432422241275",PostService.buildLocalPost(PostService.POST_TYPE.STANDARD,"Test 2 web service"));
+
+        LocalPostEvent event = new LocalPostEvent();
+        event.setTitle("Test Event Title");
+        TimeInterval schedule = new TimeInterval();
+        TimeOfDay st=new TimeOfDay();
+        st.setNanos(0);st.setSeconds(0);st.setMinutes(0);st.setHours(14);
+        schedule.setStartTime(st);
+        TimeOfDay et = new TimeOfDay();
+        et.setNanos(0);et.setSeconds(0);et.setMinutes(0);et.setHours(16);
+        schedule.setEndTime(et);
+        Date sd=new Date();
+        sd.setYear(2018);
+        sd.setMonth(8);
+        sd.setDay(5);
+        schedule.setStartDate(sd);
+        Date ed=new Date();
+        ed.setYear(2018);
+        ed.setMonth(8);
+        ed.setDay(5);
+        schedule.setEndDate(ed);
+        event.setSchedule(schedule);
+
+
+        PostService.createPost("accounts/117692749187411798258/locations/14413052432422241275",PostService.buildLocalPost(PostService.POST_TYPE.EVENT,"Event Test1",event,mis,null));
     }
 }
