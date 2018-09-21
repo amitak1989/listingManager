@@ -90,4 +90,12 @@ public class MyBusinessFactory {
         }
         return mybusiness;
     }
+
+    public static Credential getAuthorization()throws Exception{
+        httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+        dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
+
+        // Calls the authorize() function to get a credential.
+        return authorize();
+    }
 }

@@ -10,33 +10,27 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/mybusiness/google-api-services-mybusiness-v4-revsnapshot-1.23.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="file://$USER_HOME$/Downloads/mybusiness/libs" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="file://$USER_HOME$/Downloads/mybusiness/libs" />
-        </SOURCES>
-        <jarDirectory url="file://$USER_HOME$/Downloads/mybusiness/libs" recursive="false" />
-        <jarDirectory url="file://$USER_HOME$/Downloads/mybusiness/libs" recursive="false" type="SOURCES" />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
           <root url="jar://$USER_HOME$/Downloads/javax.servlet-api-4.0.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/libs" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/libs" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/libs" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/libs" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" exported="" name="google-api-services-mybusiness-v4-revsnapshot-1.25.0" level="project" />
+    <orderEntry type="library" exported="" name="google-api-client-1.25.0" level="project" />
+    <orderEntry type="library" name="google-api-client-1.25.01" level="project" />
   </component>
 </module>

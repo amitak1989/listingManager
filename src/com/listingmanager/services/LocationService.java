@@ -1,14 +1,14 @@
 package com.listingmanager.services;
 
 import com.google.api.services.mybusiness.v4.MyBusiness;
-import com.google.api.services.mybusiness.v4.model.*;
+import com.google.api.services.mybusiness.v4.model.CompleteVerificationRequest;
+import com.google.api.services.mybusiness.v4.model.ListLocationsResponse;
+import com.google.api.services.mybusiness.v4.model.Location;
+import com.google.api.services.mybusiness.v4.model.VerifyLocationRequest;
 import com.listingmanager.util.MyBusinessFactory;
 
 import java.io.IOException;
-import java.rmi.server.UID;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -112,5 +112,25 @@ public class LocationService {
         MyBusiness.Accounts.Locations.Delete deleteLocation =
                 MyBusinessFactory.getBusinessObject().accounts().locations().delete(locationName);
         deleteLocation.execute();
+    }
+
+    public static Location updateLocation(Location location) throws GeneralSecurityException, IOException {
+        MyBusiness.Accounts.Locations.Patch patch = MyBusinessFactory.getBusinessObject().accounts().locations().patch(location.getName(), location);
+        Location updatedLocation = patch.execute();
+        return updatedLocation;
+    }
+
+    public static MyBusiness.Accounts.Locations.Verifications.List getVerificationTypesByLocation(String locationName)throws Exception{
+        return MyBusinessFactory.getBusinessObject().accounts().locations().verifications().list(locationName);
+    }
+
+    public static void verifyLocation(String locationName, String pin)throws Exception{
+        CompleteVerificationRequest content=new CompleteVerificationRequest();
+        content.setPin(pin);
+        MyBusinessFactory.getBusinessObject().accounts().locations().verifications().complete(locationName,content);
+    }
+
+    public static void verificationRequest(String locationName,VerifyLocationRequest content)throws Exception{
+        MyBusinessFactory.getBusinessObject().accounts().locations().verify(locationName,content);
     }
 }

@@ -19,7 +19,7 @@ public class Main {
         //System.out.println(LocationService.listLocations("accounts/117692749187411798258"));
         //accounts/117692749187411798258/locations/14413052432422241275 location name
 
-        LocalPost post=new LocalPost();
+        /*LocalPost post=new LocalPost();
         post.setLanguageCode("en");
         post.setSummary("Test Post 1");
         post.setTopicType("STANDARD");
@@ -28,15 +28,15 @@ public class Main {
 
         MediaItem mi = new MediaItem();
         mi.setSourceUrl("https://upload.wikimedia.org/wikipedia/commons/4/49/Modern_Script_A.svg");
-        mi.setMediaFormat("PHOTO");
+        mi.setMediaFormat("PHOTO");*/
 
-        List<MediaItem>  mis = new ArrayList<MediaItem>();
-        mis.add(mi);
+        //List<MediaItem>  mis = new ArrayList<MediaItem>();
+        //mis.add(mi);
         //post.setMedia(mis);
 
 
-        LocalPostOffer offer = new LocalPostOffer();
-        offer.setCouponCode("CE345KF");
+        //LocalPostOffer offer = new LocalPostOffer();
+        //offer.setCouponCode("CE345KF");
         //offer.setRedeemOnlineUrl("http://google.com");
         //offer.setTermsConditions("test offer");
         //post.setOffer(offer);
@@ -48,7 +48,7 @@ public class Main {
         //PostService.deletePost("accounts/117692749187411798258/locations/14413052432422241275/localPosts/3980021726168296878");
         //PostService.createPost("accounts/117692749187411798258/locations/14413052432422241275",PostService.buildLocalPost(PostService.POST_TYPE.STANDARD,"Test 2 web service"));
 
-        LocalPostEvent event = new LocalPostEvent();
+        /*LocalPostEvent event = new LocalPostEvent();
         event.setTitle("Test Event Title");
         TimeInterval schedule = new TimeInterval();
         TimeOfDay st=new TimeOfDay();
@@ -68,8 +68,10 @@ public class Main {
         ed.setDay(5);
         schedule.setEndDate(ed);
         event.setSchedule(schedule);
+*/
 
+        //PostService.createPost("accounts/117692749187411798258/locations/14413052432422241275",PostService.buildLocalPost(PostService.POST_TYPE.EVENT,"Event Test1",event,mis,null));
+        LocationService.listLocations("accounts/117692749187411798258");
 
-        PostService.createPost("accounts/117692749187411798258/locations/14413052432422241275",PostService.buildLocalPost(PostService.POST_TYPE.EVENT,"Event Test1",event,mis,null));
     }
 }
